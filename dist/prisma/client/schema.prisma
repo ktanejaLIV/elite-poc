@@ -1,0 +1,52 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native","debian-openssl-3.0.x"]
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // <- ye line add karo
+}
+
+model Member {
+  id                 String   @id @default(uuid())
+  email              String   @unique
+  firstName          String
+  lastName           String
+  currentEmployer    String
+  currentTitle       String
+  employmentStatus   String
+  verificationStatus String
+  lastVerifiedAt     DateTime?
+  createdAt          DateTime @default(now())
+
+  pendingConfirmations PendingConfirmation[]
+  auditLogs            AuditLog[]
+}
+
+model PendingConfirmation {
+  id                String   @id @default(uuid())
+  member            Member   @relation(fields: [memberId], references: [id])
+  memberId          String
+  confirmationToken String   @unique
+  proposedEmployer  String
+  proposedTitle     String
+  enrichmentEmail   String?
+  confidenceScore   Float?
+  status            String
+  expiresAt         DateTime
+  confirmedAt       DateTime?
+
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  member     Member   @relation(fields: [memberId], references: [id])
+  memberId   String
+  action     String
+  performedBy String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+}
