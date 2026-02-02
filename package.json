@@ -2,9 +2,11 @@
   "name": "elite-poc",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "ts-node src/index.ts"
-  },
+ "scripts": {
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "dev": "ts-node src/index.ts"
+},
   "dependencies": {
     "@prisma/client": "^4.16.2",
     "@sendgrid/mail": "^8.1.6",
