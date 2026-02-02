@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "build": "tsc && xcopy /E /I node_modules\\.prisma dist\\prisma",
+  "build": "tsc",
   "start": "node dist/index.js",
   "dev": "ts-node src/index.ts"
-  },
+},
 "dependencies": {
   "typescript": "^5.9.3",
   "ts-node": "^10.9.2",
